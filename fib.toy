@@ -1,0 +1,10 @@
+n = 30;
+a = 0;
+b = 1;
+while (n > 0) {
+  print b;
+  c = b;
+  b = a + b;
+  a = c;
+  n = n - 1;  
+}
