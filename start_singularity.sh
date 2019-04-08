@@ -1,3 +1,3 @@
-singularity run shub://okuisatoshi/singularity-ijavascript:master
+singularity run shub://okuisatoshi/singularity-ijavascript
 
 
