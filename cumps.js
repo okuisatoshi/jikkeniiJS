@@ -30,15 +30,6 @@ const plus = function (m1, m2) {
 
 // Utilities
 
-const foldr = function (f, u, array) {
-    let r = u;
-    for (let i = array.length - 1; i >= 0; i--) {
-	r = f(array[i], r);
-    }
-    return r;
-};
-
-
 const aggregate = function (a1, a2) {
     return (a1 instanceof Array ? a1 : [a1]).concat(a2);
 };
@@ -93,7 +84,7 @@ const cat = function (p1, p2) {
 
 
 const seq = function (/* arguments */) {
-    return foldr(cat, empty, arguments);
+    return Array.from(arguments).reduce(cat,empty);
 };
     
 
@@ -103,7 +94,7 @@ const or = function (p1, p2) {
 
 
 const oneOf = function (/* arguments */) {
-    return foldr(or, fail, arguments);
+    return Array.from(arguments).reduce(or,fail);
 };
 
 
