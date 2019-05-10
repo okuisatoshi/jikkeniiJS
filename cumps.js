@@ -31,9 +31,9 @@ const plus = function (m1, m2) {
 // Utilities
 
 const foldr = function (f, u, array) {
-    var r = u;
-    for (var i = array.length - 1; i >= 0; i--) {
-    r = f(array[i], r);
+    let r = u;
+    for (let i = array.length - 1; i >= 0; i--) {
+	r = f(array[i], r);
     }
     return r;
 };
@@ -45,7 +45,7 @@ const aggregate = function (a1, a2) {
 
 
 const silent = function (p) {
-    return bind(p, function(s) { return []; }); // Attach silent action
+    return bind(p, function(a) { ret([]); }); // Attach silent action
 };
 
 
