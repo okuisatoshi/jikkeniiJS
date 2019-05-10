@@ -2,7 +2,7 @@
 
 // Basic monadic operations
     
-const ret = function (a) {
+const unit = function (a) {
     function m(s) { return {a:m.action(a), s:s}; };
     m.action = function(s) { return s; }
     return m;
@@ -45,7 +45,7 @@ const aggregate = function (a1, a2) {
 
 
 const silent = function (p) {
-    return bind(p, function(a) { return ret([]); }); // Attach silent action
+    return bind(p, function(a) { return unit([]); }); // Attach silent action
 };
 
 
@@ -63,7 +63,7 @@ const word = function (w) {
             return { a: w, s: s.slice(w.length) };
         return undefined;
     };
-    return bind(p, ret); // Attach default action
+    return bind(p, unit); // Attach default action
 };
 
 
@@ -74,17 +74,17 @@ const pattern = function (re) {
         }
         return undefined;
     };
-    return bind(p,ret); // Attach default action	
+    return bind(p,unit); // Attach default action	
 };
 
 
-const empty = ret([]);
+const empty = unit([]);
 
 
 const cat = function (p1, p2) {
     return bind(toParser(p1), function(a1) {
         return bind(toParser(p2), function(a2) {
-            return ret(aggregate(a1, a2));
+            return unit(aggregate(a1, a2));
         });
     });
 };
@@ -109,7 +109,7 @@ const not = function (p) {
     const q = function(s) {
         return toParser(p)(s) ? fail(s) : empty(s);
     };
-    return bind(q,ret); // Attach default action
+    return bind(q,unit); // Attach default action
 };
 
 
@@ -131,7 +131,7 @@ const moreThan0 = function (p) {
     const p_star = function (s) {
 	return oneOf(seq(q, p_star), empty)(s);
     };
-    return bind(p_star, ret); // Attach default action
+    return bind(p_star, unit); // Attach default action
 };
 
 
