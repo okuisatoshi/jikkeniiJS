@@ -57,20 +57,23 @@ const toParser = function (p) {
     
 const word = function (w) {
     const p = function (s) {
-        s.match(/^[ \t\n]*/);
-        s = RegExp.rightContext;
-        if (s.slice(0,w.length) == w)
-            return { a: w, s: s.slice(w.length) };
+        const n = s.match(/^[ \t\n]*/)[0].length;
+        s = s.slice(n)
+        if (s.slice(0,w.length) === w)
+            return { a:w, s:s.slice(w.length) };
         return undefined;
     };
     return bind(p, unit); // Attach default action
 };
 
-
 const pattern = function (re) {
     const p = function (s) {
-        if (s.match(new RegExp('^[ \t\n]*(' + re + ')'))) {
-            return {a: RegExp.$1, s: RegExp.rightContext};
+        const n = s.match(/^[ \t\n]*/)[0].length;
+        s = s.slice(n)
+        const r = s.match(new RegExp('^' + re))
+        if (r) {
+	    const n = r[0].length
+            return {a:s.slice(0,n), s:s.slice(n)};
         }
         return undefined;
     };
