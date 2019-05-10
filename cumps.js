@@ -94,9 +94,10 @@
     };
     
     const not = function (p) { 
-        return function(s) {
+        const p = function(s) {
             return toParser(p)(s) ? fail(s) : empty(s);
         };
+	return bind(p,ret); // Attach default action
     };
 
     const amp = function (p) { return not(not(p)); };
@@ -115,7 +116,7 @@
 	const p_star = function (s) {
 	    return oneOf(seq(q, p_star), empty)(s);
 	};
-	return p_star;
+	return bind(p_star, ret); // Attach default action
     };
     
     const moreThan1 = function (p) {
