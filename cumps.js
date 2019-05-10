@@ -4,7 +4,7 @@
     
 const unit = function (a) {
     const m = function (s) { return {a:m.action(a), s:s}; };
-    m.action = function(s) { return s; } // Default action do nothing
+    m.action = function(s) { return s; } // Default action does nothing
     return m;
 }; 
 
@@ -15,7 +15,7 @@ const bind = function (m, f) {
         r = r && f(r.a)(r.s);
         return r && { a:mf.action(r.a), s:r.s }
     };
-    mf.action = function(s) { return s; } // Default action do nothing
+    mf.action = function(s) { return s; } // Default action does nothing
     return mf;
 };
 
@@ -129,7 +129,7 @@ const moreThan0 = function (p) {
 	if (r && r.s.length < n) return r
 	return undefined
     };
-    // Use a thunk to avoid infinite recursive call
+    // Need a thunk to avoid infinite recursive call
     const p_star = function (s) {
 	return oneOf(seq(q, p_star), empty)(s);
     };
