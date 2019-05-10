@@ -45,7 +45,7 @@ const aggregate = function (a1, a2) {
 
 
 const silent = function (p) {
-    return bind(p, function(a) { ret([]); }); // Attach silent action
+    return bind(p, function(a) { return ret([]); }); // Attach silent action
 };
 
 
@@ -157,6 +157,6 @@ exports.moreThan1 = moreThan1
 exports.sepBy = sepBy
 exports.not = not
 exports.amp = amp
-
+exports.silent = silent
 
 
