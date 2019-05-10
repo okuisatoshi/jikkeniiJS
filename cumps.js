@@ -41,7 +41,7 @@
     };
 
     const silent = function (p) {
-        return bind(p, ret); // Attach default action
+        return bind(p, function(s) { return []; }); // Attach silent action
     };
 
     const toParser = function (p) {
