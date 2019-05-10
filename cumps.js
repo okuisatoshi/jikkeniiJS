@@ -3,20 +3,20 @@
 // Basic monadic operations
     
 const unit = function (a) {
-    function m(s) { return {a:m.action(a), s:s}; };
-    m.action = function(s) { return s; }
+    const m = function (s) { return {a:m.action(a), s:s}; };
+    m.action = function(s) { return s; } // Default action do nothing
     return m;
 }; 
 
 
 const bind = function (m, f) {
-    function n(s) {
+    const mf = function (s) {
         let r = m(s);
         r = r && f(r.a)(r.s);
-        return r && { a:n.action(r.a), s:r.s }
+        return r && { a:mf.action(r.a), s:r.s }
     };
-    n.action = function(s) { return s; }
-    return n;
+    mf.action = function(s) { return s; } // Default action do nothing
+    return mf;
 };
 
 
@@ -77,7 +77,6 @@ const pattern = function (re) {
     return bind(p,unit); // Attach default action	
 };
 
-
 const empty = unit([]);
 
 
@@ -90,7 +89,7 @@ const cat = function (p1, p2) {
 };
 
 
-const seq = function () {
+const seq = function (/* arguments */) {
     return foldr(cat, empty, arguments);
 };
     
@@ -100,7 +99,7 @@ const or = function (p1, p2) {
 };
 
 
-const oneOf = function () {
+const oneOf = function (/* arguments */) {
     return foldr(or, fail, arguments);
 };
 
@@ -157,6 +156,3 @@ exports.moreThan1 = moreThan1
 exports.sepBy = sepBy
 exports.not = not
 exports.amp = amp
-exports.silent = silent
-
-
