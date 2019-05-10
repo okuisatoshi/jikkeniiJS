@@ -48,7 +48,7 @@ const toParser = function (p) {
     
 const word = function (w) {
     const p = function (s) {
-        const n = s.match(/^[ \t\n]*/)[0].length;
+        const n = s.match(/^\s*/)[0].length;
         s = s.slice(n)
         if (s.slice(0,w.length) === w)
             return { a:w, s:s.slice(w.length) };
@@ -59,7 +59,7 @@ const word = function (w) {
 
 const pattern = function (re) {
     const p = function (s) {
-        const n = s.match(/^[ \t\n]*/)[0].length;
+        const n = s.match(/^\s*/)[0].length;
         s = s.slice(n)
         const r = s.match(new RegExp('^' + re))
         if (r) {
