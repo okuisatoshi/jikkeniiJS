@@ -69,7 +69,6 @@ const pattern = function (re) {
 
 const empty = unit([]);
 
-    return (a1 instanceof Array ? a1 : [a1]).concat(a2);
 const cat = function (p1, p2) {
     return bind(toParser(p1), function(a1) {
         return bind(toParser(p2), function(a2) {
