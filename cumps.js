@@ -30,11 +30,6 @@ const plus = function (m1, m2) {
 
 // Utilities
 
-const aggregate = function (a1, a2) {
-    return (a1 instanceof Array ? a1 : [a1]).concat(a2);
-};
-
-
 const silent = function (p) {
     return bind(p, function(a) { return unit([]); }); // Attach silent action
 };
@@ -50,8 +45,9 @@ const word = function (w) {
     const p = function (s) {
         const n = s.match(/^\s*/)[0].length;
         s = s.slice(n)
-        if (s.slice(0,w.length) === w)
-            return { a:w, s:s.slice(w.length) };
+        if (s.slice(0,w.length) === w) {
+            return {a:w, s:s.slice(w.length)};
+	}    
         return undefined;
     };
     return bind(p, unit); // Attach default action
@@ -63,9 +59,9 @@ const pattern = function (re) {
         s = s.slice(n)
         const r = s.match(new RegExp('^' + re))
         if (r) {
-	    const n = r[0].length
-            return {a:s.slice(0,n), s:s.slice(n)};
-        }
+	    const w = r[0]
+	    return {a:w, s:s.slice(w.length)};
+	}
         return undefined;
     };
     return bind(p,unit); // Attach default action	
@@ -73,11 +69,11 @@ const pattern = function (re) {
 
 const empty = unit([]);
 
-
+    return (a1 instanceof Array ? a1 : [a1]).concat(a2);
 const cat = function (p1, p2) {
     return bind(toParser(p1), function(a1) {
         return bind(toParser(p2), function(a2) {
-            return unit(aggregate(a1, a2));
+            return unit((a1 instanceof Array ? a1 : [a1]).concat(a2));
         });
     });
 };
