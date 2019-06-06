@@ -60,8 +60,8 @@ const pattern = re =>
         const n = s.match(/^\s*/)[0].length;
         s = s.slice(n)
         const r = s.match(new RegExp('^' + re))
-        if (r) {
-	    const w = r[0]
+            if (r) {
+	        const w = r[0]
 	    return {a:w, s:s.slice(w.length)};
 	}
         return undefined;
@@ -98,10 +98,10 @@ const optional = p => or(p, empty);
 const moreThan0 = p => {
     // Consume at least one character; fails otherwise
     const q = function (s) {
-	const n = s.length;
-	r = p(s);
-	if (r && r.s.length < n) return r
-	return undefined
+	    const n = s.length;
+	    r = p(s);
+	    if (r && r.s.length < n) return r
+	    return undefined
     };
     // Need a thunk to avoid infinite recursive call
     const p_star = s => oneOf(seq(q, p_star), empty)(s);
